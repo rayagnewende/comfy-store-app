@@ -1007,9 +1007,9 @@ const Navbar = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  ...
+  
 };
-```
+
 
 ## Challenge (16) - About Page
 
