@@ -6,3 +6,6 @@ export { default as Hero } from "./Hero";
 export { default as ErrorElement } from "./ErrorElement";
 export { default as FeaturedProducts } from "./FeaturedProducts";
 export { default as Loading } from "./Loading";
+export { default as CartItems } from "./CartItems";
+export { default as CartItem } from "./CartItem";
+export { default as CartTotals } from "./CartTotals";
