@@ -66,6 +66,6 @@ const cartSlice = createSlice({
 });
 
 // eslint-disable-next-line no-unused-vars
-export const { addItem, removeItem, editItem } = cartSlice.actions;
+export const { addItem, removeItem, editItem , clearCart} = cartSlice.actions;
 
 export default cartSlice.reducer;

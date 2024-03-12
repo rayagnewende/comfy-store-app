@@ -4,6 +4,7 @@ import Cartitems from "../components/CartItems";
 import CartTotals from "../components/CartTotals";
 
 const Cart = () => {
+  const user = useSelector((state) => state.user.user);
   const numItemsInCart = useSelector((state) => state.cart.numItemInCart);
   console.log(numItemsInCart);
   if (numItemsInCart <= 0) {
@@ -17,10 +18,14 @@ const Cart = () => {
         <div className="lg:col-span-8">
           <Cartitems />
         </div>
-        <div className="lg:col-span-4">
-          <CartTotals />
-          <button className="btn btn-primary w-full">please validate</button>
-        </div>
+        {user ? (
+          <div className="lg:col-span-4">
+            <CartTotals />
+            <button className="btn btn-primary w-full">please validate</button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

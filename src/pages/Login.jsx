@@ -1,7 +1,45 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import { FormInput, SubmitBtn } from "../components";
+import { CustomFetch } from "../utils";
+import { toast } from "react-toastify";
+import { loginUser } from "../features/user/userSlice";
+import { useDispatch } from "react-redux";
+
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    try {
+      const response = await CustomFetch.post("/auth/local", data);
+      store.dispatch(loginUser(response.data));
+      toast.success("logged successfully!");
+      return redirect("/");
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.error?.message ||
+        "please double check your crédentials";
+      toast.error(errorMessage);
+    }
+  };
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const loginASaGuest = async () => {
+    try {
+      const response = await CustomFetch.post("/auth/local", {
+        identifier: "test@test.com",
+        password: "secret",
+      });
+      dispatch(loginUser(response.data));
+      toast.success("successfully!");
+      return redirect("/");
+    } catch (error) {
+      console.log(error);
+      toast.error("guest user error! please try again.");
+    }
+  };
   return (
     <section className="h-screen grid place-items-center">
       <Form
@@ -24,7 +62,9 @@ const Login = () => {
         <div className="mt-4">
           <SubmitBtn text="login" />
         </div>
-        <button className="btn btn-secondary btn-block">guest user</button>
+        <button className="btn btn-secondary btn-block" onClick={loginASaGuest}>
+          guest user
+        </button>
         <p className="text-center">
           Not a member yert?{" "}
           <Link
