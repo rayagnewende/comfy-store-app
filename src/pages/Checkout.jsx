@@ -4,13 +4,13 @@ import { CartTotals, CheckoutForm } from "../components";
 import { toast } from "react-toastify";
 import { redirect } from "react-router-dom";
 
-export const loader = (store) => async () => {
+export const loader = async (store) => async () => {
   const user = store.getState().user;
   if (!user) {
     toast.warn("you must to logged in the checkout");
     return redirect("/login");
   }
-};
+};   
 
 const Checkout = () => {
   const cartTotal = useSelector((state) => state.user.cartTotal);
