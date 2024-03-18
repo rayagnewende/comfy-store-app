@@ -1,4 +1,4 @@
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link, redirect, useNavigate } from "react-router-dom";
 import { FormInput, SubmitBtn } from "../components";
 import { CustomFetch } from "../utils";
 import { toast } from "react-toastify";
@@ -25,17 +25,19 @@ export const action =
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const loginASaGuest = async () => {
+  const loginASaGuest = async (e) => {
+    e.preventDefault();
     try {
       const response = await CustomFetch.post("/auth/local", {
         identifier: "test@test.com",
         password: "secret",
       });
-      console.log(response.data);
       dispatch(loginUser(response.data));
       toast.success("successfully!");
-      return redirect("/");
+      console.log("test debut");
+      navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("guest user error! please try again.");

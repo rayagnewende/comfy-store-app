@@ -4,16 +4,18 @@ import { CartTotals, CheckoutForm } from "../components";
 import { toast } from "react-toastify";
 import { redirect } from "react-router-dom";
 
-export const loader = async (store) => async () => {
-  const user = store.getState().user;
+export const loader = (store) => () => {
+  const user = store.getState().user.user;
   if (!user) {
-    toast.warn("you must to logged in the checkout");
+    toast.success("You need to sigin before see the checkout!");
     return redirect("/login");
   }
-};   
+  return null;
+};
 
 const Checkout = () => {
-  const cartTotal = useSelector((state) => state.user.cartTotal);
+  const cartTotal = useSelector((state) => state.cart.cartTotal);
+  console.log(cartTotal);
   if (cartTotal === 0) {
     return <SectionTitle text="Your cart is empty!" />;
   }
